@@ -13,8 +13,8 @@ The experimental results are show in these two gifs:
 
 ### TPSCF:
 
-![image](img/TPSCF.gif)
+![image](https://anonymous.4open.science/r/TPSCF-8757/img/TPSCF.gif)
 
 ### MDQN:
 
-![image](img/Compare.gif)
+![image](https://anonymous.4open.science/r/TPSCF-8757/img/Compare.gif)
