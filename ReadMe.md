@@ -3,7 +3,7 @@ TPSCF: Mitigating Action Hysteresis in Traffic Signal Control with Traffic Predi
 
 ## 1. Overview
 
-![framework](img/overview.png)
+![framework](https://anonymous.4open.science/r/TPSCF-8757/img/overview.png)
 
 
 ## 2. Experimental Results
