@@ -9,7 +9,7 @@ TPSCF: Mitigating Action Hysteresis in Traffic Signal Control with Traffic Predi
 ## 2. Experimental Results
 
 Using the same simulation environment to test different methods, we successively intercepted the traffic flow visualization diagram of the same local road network at t=6000, 7000, 8000, 9000, 10000, 11000 and 12000.
-The experimental results are show in these two gifs:
+The experimental results are show in these two GIFs:
 
 ### TPSCF:
 
@@ -18,3 +18,5 @@ The experimental results are show in these two gifs:
 ### MDQN:
 
 ![image](https://anonymous.4open.science/r/TPSCF-8757/img/Compare.gif)
+
+It is obvious that our method can effectively alleviate the congestion (t ≥11000) on the road.
