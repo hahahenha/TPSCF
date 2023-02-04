@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2023/2/4 20:08:01 by SUMO gui Version 0.32.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="data/txmap.net.xml"/>
+        <route-files value="data/txmap.rou.xml"/>
+        <additional-files value="data/txmap.det.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="data/txmap-tripinfo.xml"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+    </time>
+
+    <report>
+        <verbose value="true"/>
+        <no-warnings value="true"/>
+        <no-step-log value="true"/>
+    </report>
+
+    <traci_server>
+        <remote-port value="52893"/>
+    </traci_server>
+
+    <gui_only>
+        <gui-settings-file value="data/guisettings.xml"/>
+        <quit-on-end value="true"/>
+        <start value="true"/>
+    </gui_only>
+
+</configuration>
+-->
+
+<tripinfos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/tripinfo_file.xsd">
+    <tripinfo id="3" depart="2.00" departLane="NS008#0#01_0" departPos="4.40" departSpeed="0.00" departDelay="0.00" arrival="13.00" arrivalLane="NS008#0#01_0" arrivalPos="156.80" arrivalSpeed="21.39" duration="11.00" routeLength="152.40" waitSteps="0" timeLoss="4.12" rerouteNo="0" devices="tripinfo_3" vType="typeNormal" speedFactor="1.00" vaporized=""/>
+    <tripinfo id="0" depart="0.00" departLane="HS002#1#04_0" departPos="7.20" departSpeed="0.00" departDelay="0.00" arrival="35.00" arrivalLane="gneE96_0" arrivalPos="238.30" arrivalSpeed="21.97" duration="35.00" routeLength="513.05" waitSteps="0" timeLoss="11.17" rerouteNo="0" devices="tripinfo_0" vType="typeHeavy1" speedFactor="1.00" vaporized=""/>
+    <tripinfo id="36" depart="26.00" departLane="NS020#0#03_0" departPos="4.40" departSpeed="0.00" departDelay="0.00" arrival="49.00" arrivalLane="NS020#0#03_0" arrivalPos="380.51" arrivalSpeed="22.14" duration="23.00" routeLength="376.11" waitSteps="0" timeLoss="5.36" rerouteNo="0" devices="tripinfo_36" vType="typeNormal" speedFactor="1.00" vaporized=""/>
+    <tripinfo id="18" depart="11.00" departLane="HS001#1#01_0" departPos="2.30" departSpeed="0.00" departDelay="0.00" arrival="63.00" arrivalLane="gneE31_0" arrivalPos="710.07" arrivalSpeed="22.09" duration="52.00" routeLength="1112.53" waitSteps="0" timeLoss="6.63" rerouteNo="0" devices="tripinfo_18" vType="typeLight" speedFactor="1.00" vaporized=""/>
+    <tripinfo id="9" depart="6.00" departLane="-650246743#2_0" departPos="4.40" departSpeed="0.00" departDelay="0.00" arrival="83.00" arrivalLane="NS018#1#02_0" arrivalPos="138.44" arrivalSpeed="12.03" duration="77.00" routeLength="453.14" waitSteps="0" timeLoss="10.42" rerouteNo="0" devices="tripinfo_9" vType="typeNormal" speedFactor="1.00" vaporized=""/>
+</tripinfos>

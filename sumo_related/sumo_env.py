@@ -16,6 +16,7 @@ import platform
 from utils.sql_query import *
 
 # constant
+zfill_num = 2
 t_count_down = 10
 T_Y_TRANS = 2                                                 # Signal transition time when changing sides
 OCC_TH_HIGH = 0.7                                          # Detector occupancy high threshold for jamming
@@ -116,7 +117,7 @@ def start_new_run(run):
         # Generate a new random routes file
         os.system(
             "python \"%SUMO_HOME%/tools/randomTrips.py\" -n data/" + ss + ".net.xml --trip-attributes=\"type=\\\"light_norm_heavy\\\"\" "
-                                                                          "-a data/" + ss + ".add.xml -r data/" + ss + ".rou.xml -e 5000 -p 0.45 --binomial=5 -L")
+                                                                          "-a data/" + ss + ".add.xml -r data/" + ss + ".rou.xml -e 3000 -p 0.75 --binomial=2 -L")
         print('Delete useless files...')
         # Delete unwanted alt route file
         os.system("del \"data\\" + ss + ".rou.alt.xml\"")
@@ -126,7 +127,7 @@ def start_new_run(run):
         # Generate a new random routes file
         os.system(
             "python \"$SUMO_HOME/tools/randomTrips.py\" -n data/" + ss + ".net.xml --trip-attributes=\"type=\\\"light_norm_heavy\\\"\" "
-                                                                         "-a data/" + ss + ".add.xml -r data/" + ss + ".rou.xml -e 5000 -p 0.45 --binomial=5 -L")
+                                                                         "-a data/" + ss + ".add.xml -r data/" + ss + ".rou.xml -e 3000 -p 0.75 --binomial=2 -L")
         print('Delete useless files...')
         # Delete unwanted alt route file
         os.system("rm \"data/" + ss + ".rou.alt.xml\"")
@@ -257,7 +258,7 @@ def calculate_reward(current_state, previous_state, intID, phase_num, current_al
                 elif cur_state < OCC_TH_LOW and (OCC_TH_LOW <= pre_state < OCC_TH_HIGH):
                     prev_state_arr = []
                     for i in range(NUM_INTN_ROADS[intID]):
-                        tmp_road_key = intID + '#0#' + str(i + 1).zfill(3)
+                        tmp_road_key = intID + '#0#' + str(i + 1).zfill(zfill_num)
 
                         # tmp_lane_num = full_in_lanes_num[tmp_road_key]
                         # for i in range(tmp_lane_num):
@@ -273,7 +274,7 @@ def calculate_reward(current_state, previous_state, intID, phase_num, current_al
                 elif cur_state >= OCC_TH_LOW and (OCC_TH_LOW <= pre_state < OCC_TH_HIGH):
                     prev_state_arr = []
                     for i in range(NUM_INTN_ROADS[intID]):
-                        tmp_road_key = intID + '#0#' + str(i + 1).zfill(3)
+                        tmp_road_key = intID + '#0#' + str(i + 1).zfill(zfill_num)
 
                         # tmp_lane_num = full_in_lanes_num[tmp_road_key]
                         # for i in range(tmp_lane_num):
@@ -289,7 +290,7 @@ def calculate_reward(current_state, previous_state, intID, phase_num, current_al
                 elif cur_state < OCC_TH_LOW and pre_state >= OCC_TH_HIGH:
                     prev_state_arr = []
                     for i in range(NUM_INTN_ROADS[intID]):
-                        tmp_road_key = intID + '#0#' + str(i + 1).zfill(3)
+                        tmp_road_key = intID + '#0#' + str(i + 1).zfill(zfill_num)
                         prev_state_arr.append(previous_state[tmp_road_key])
                     prev_state_max = max(prev_state_arr)
                     if prev_state_max == pre_state:
@@ -339,13 +340,23 @@ def calculate_reward(current_state, previous_state, intID, phase_num, current_al
                 # pre_state = previous_state[roadID_from]
 
                 if cur_state < OCC_TH_LOW and pre_state < OCC_TH_LOW:
-                    Reward = 40
+                    Reward = 23
                 elif cur_state >= OCC_TH_LOW and pre_state < OCC_TH_LOW:
-                    Reward = 20
-                elif cur_state < OCC_TH_LOW and (OCC_TH_LOW <= pre_state < OCC_TH_HIGH):
+                    Reward = 13
+                elif cur_state < OCC_TH_HIGH and pre_state >= OCC_TH_HIGH:
                     prev_state_arr = []
                     for i in range(NUM_INTN_ROADS[intID]):
-                        tmp_road_key = intID + '#0#' + str(i + 1).zfill(3)
+                        tmp_road_key = intID + '#0#' + str(i + 1).zfill(zfill_num)
+                        prev_state_arr.append(previous_state[tmp_road_key])
+                    prev_state_max = max(prev_state_arr)
+                    if prev_state_max == pre_state:
+                        Reward = -7
+                    else:
+                        Reward = -4.5
+                elif cur_state < OCC_TH_HIGH and (OCC_TH_LOW <= pre_state < OCC_TH_HIGH):
+                    prev_state_arr = []
+                    for i in range(NUM_INTN_ROADS[intID]):
+                        tmp_road_key = intID + '#0#' + str(i + 1).zfill(zfill_num)
 
                         # tmp_lane_num = full_in_lanes_num[tmp_road_key]
                         # for i in range(tmp_lane_num):
@@ -355,13 +366,13 @@ def calculate_reward(current_state, previous_state, intID, phase_num, current_al
 
                     prev_state_max = max(prev_state_arr)
                     if prev_state_max == pre_state:
-                        Reward = -10
+                        Reward = -2
                     else:
-                        Reward = -5
-                elif cur_state >= OCC_TH_LOW and (OCC_TH_LOW <= pre_state < OCC_TH_HIGH):
+                        Reward = 0.5
+                elif cur_state >= OCC_TH_HIGH and (OCC_TH_LOW <= pre_state < OCC_TH_HIGH):
                     prev_state_arr = []
                     for i in range(NUM_INTN_ROADS[intID]):
-                        tmp_road_key = intID + '#0#' + str(i + 1).zfill(3)
+                        tmp_road_key = intID + '#0#' + str(i + 1).zfill(zfill_num)
 
                         # tmp_lane_num = full_in_lanes_num[tmp_road_key]
                         # for i in range(tmp_lane_num):
@@ -371,23 +382,13 @@ def calculate_reward(current_state, previous_state, intID, phase_num, current_al
 
                     prev_state_max = max(prev_state_arr)
                     if prev_state_max == pre_state:
-                        Reward = -20
+                        Reward = -12
                     else:
-                        Reward = -15
-                elif cur_state < OCC_TH_LOW and pre_state >= OCC_TH_HIGH:
-                    prev_state_arr = []
-                    for i in range(NUM_INTN_ROADS[intID]):
-                        tmp_road_key = intID + '#0#' + str(i + 1).zfill(3)
-                        prev_state_arr.append(previous_state[tmp_road_key])
-                    prev_state_max = max(prev_state_arr)
-                    if prev_state_max == pre_state:
-                        Reward = -30
-                    else:
-                        Reward = -25
-                elif cur_state >= OCC_TH_LOW and pre_state >= OCC_TH_HIGH:
-                    Reward = -40
+                        Reward = -9.5
+                elif cur_state >= OCC_TH_HIGH and pre_state >= OCC_TH_HIGH:
+                    Reward = -17
 
-                dep_rwd_penality = -5
+                dep_rwd_penality = 5
 
                 if roadID_to.find('#0#') >= 0:
                     if cur_state >= OCC_TH_HIGH and current_state[roadID_to] >= OCC_TH_HIGH:
@@ -407,75 +408,6 @@ def calculate_reward(current_state, previous_state, intID, phase_num, current_al
                         break
 
     Reward_total += Reward
-
-
-
-
-    # road_key = intID + '#0#' + str(int(phase_num / 2) % NUM_INTN_ROADS[intID] + 1).zfill(3)
-    #
-    # if current_state[road_key] < OCC_TH_LOW and previous_state[road_key] < OCC_TH_LOW:
-    #     Reward = -40
-    # elif current_state[road_key] >= OCC_TH_LOW and previous_state[road_key] < OCC_TH_LOW:
-    #     Reward = -20
-    # elif current_state[road_key] < OCC_TH_LOW and (OCC_TH_LOW <= previous_state[road_key] < OCC_TH_HIGH):
-    #     prev_state_arr = []
-    #     for i in range(NUM_INTN_ROADS[intID]):
-    #         tmp_road_key = intID + '#0#' + str(i+1).zfill(3)
-    #         prev_state_arr.append(previous_state[tmp_road_key])
-    #     prev_state_max = max(prev_state_arr)
-    #     if prev_state_max == previous_state[road_key]:
-    #         Reward = 10
-    #     else:
-    #         Reward = 5
-    # elif current_state[road_key] >= OCC_TH_LOW and (OCC_TH_LOW <= previous_state[road_key] < OCC_TH_HIGH):
-    #     prev_state_arr = []
-    #     for i in range(NUM_INTN_ROADS[intID]):
-    #         tmp_road_key = intID + '#0#' + str(i+1).zfill(3)
-    #         prev_state_arr.append(previous_state[tmp_road_key])
-    #     prev_state_max = max(prev_state_arr)
-    #     if prev_state_max == previous_state[road_key]:
-    #         Reward = 20
-    #     else:
-    #         Reward = 15
-    # elif current_state[road_key] < OCC_TH_LOW and previous_state[road_key] >= OCC_TH_HIGH:
-    #     prev_state_arr = []
-    #     for i in range(NUM_INTN_ROADS[intID]):
-    #         tmp_road_key = intID + '#0#' + str(i+1).zfill(3)
-    #         prev_state_arr.append(previous_state[tmp_road_key])
-    #     prev_state_max = max(prev_state_arr)
-    #     if prev_state_max == previous_state[road_key]:
-    #         Reward = 30
-    #     else:
-    #         Reward = 25
-    # elif current_state[road_key] >= OCC_TH_LOW and previous_state[road_key] >= OCC_TH_HIGH:
-    #     Reward = 40
-    #
-    # # road relation
-    # dep_rwd_penality = 5
-    #
-    # relation_res = road_relation_df[road_relation_df[4] == intID]
-    # phase_detail = phases_detail[intID+'_'+str(phase_num)]
-    # for index, row in relation_res.iterrows():
-    #     roadID_from = row[0]
-    #     roadID_to = row[2]
-    #     control_order = row[5]
-    #     if phase_detail[control_order-1] == '1':
-    #         if roadID_to.find('#0#') >= 0:
-    #             if current_state[roadID_from] >= OCC_TH_HIGH and current_state[roadID_to] >= OCC_TH_HIGH:
-    #                 Reward -= dep_rwd_penality
-    #                 break
-    #         else:
-    #             relation_res2 = road_relation_df[road_relation_df[0] == roadID_to]
-    #             flag = False
-    #             for index2, row2 in relation_res2.iterrows():
-    #                 roadID_to2 = row2[2]
-    #                 if roadID_to2.find('#0#') >= 0:
-    #                     if current_state[roadID_from] >= OCC_TH_HIGH and current_state[roadID_to2] >= OCC_TH_HIGH:
-    #                         Reward -= dep_rwd_penality
-    #                         flag = True
-    #                         break
-    #             if flag:
-    #                 break
 
     return Reward_total
 

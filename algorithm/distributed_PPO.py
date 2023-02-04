@@ -7,6 +7,8 @@
 # @File : distributed_PPO.py
 # @Software: PyCharm
 
+# A full version is not made public, due to several restrictions
+
 import copy
 import time
 from collections import namedtuple

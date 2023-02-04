@@ -8,7 +8,7 @@ from utils import plot_metrics
 
 # Train the QR-DQN model
 sumo_env.endis_sumo_guimode(1)
-Nruns = 25
+Nruns = 100
 Distr_PPO(Nruns)
 print("finish 1")
 

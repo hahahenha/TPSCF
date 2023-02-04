@@ -10,12 +10,12 @@ config_args = {
         'usr':('root', 'mySQL user'),
         'passwd':('123456', 'mySQL password'),
         'db': ('regional_traffic_control', 'mySQL database name'),
-        'phases_detail_name':('xs_phases_detail', 'table phases_detail name'),
-        'road_lanes_name':('xs_road_lanes', 'table road_lanes name'),
-        'road_relation_name':('xs_road_relation', 'table road_relation name'),
-        'signal_phases_name':('xs_signal_phases', 'table signal_phases name'),
-        'sumo_file_name':('xiaoshan', 'sumo file name'),
-        'state-len':(255, 'state length: [82, 255]')
+        'phases_detail_name':('phases_detail', 'table phases_detail name'),
+        'road_lanes_name':('road_lanes', 'table road_lanes name'),
+        'road_relation_name':('road_relation', 'table road_relation name'),
+        'signal_phases_name':('signal_phases', 'table signal_phases name'),
+        'sumo_file_name':('txmap', 'sumo file name'),
+        'state-len':(82, 'state length: [82, 255]')
     },
     'model_config': {
         'model': ('compare', 'which encoder to use, can be any of [gan, nongan, compare]'),

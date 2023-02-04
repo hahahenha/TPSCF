@@ -33,4 +33,4 @@ if __name__ == '__main__':
 
         f.write('</additional>\n')
 
-    os.system('python ../data/randomTrips.py -n ../data/'+ map_name +'.net.xml -r ../data/' + map_name + '.rou.xml -e 10000 -l --validate - flows 500')
+    os.system('python ../data/randomTrips.py -n ../data/'+ map_name +'.net.xml -r ../data/' + map_name + '.rou.xml -e 2000 -l --validate - flows 500')
