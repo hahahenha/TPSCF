@@ -340,9 +340,9 @@ def calculate_reward(current_state, previous_state, intID, phase_num, current_al
                 # pre_state = previous_state[roadID_from]
 
                 if cur_state < OCC_TH_LOW and pre_state < OCC_TH_LOW:
-                    Reward = 23
+                    Reward = 38
                 elif cur_state >= OCC_TH_LOW and pre_state < OCC_TH_LOW:
-                    Reward = 13
+                    Reward = 28
                 elif cur_state < OCC_TH_HIGH and pre_state >= OCC_TH_HIGH:
                     prev_state_arr = []
                     for i in range(NUM_INTN_ROADS[intID]):
@@ -350,9 +350,9 @@ def calculate_reward(current_state, previous_state, intID, phase_num, current_al
                         prev_state_arr.append(previous_state[tmp_road_key])
                     prev_state_max = max(prev_state_arr)
                     if prev_state_max == pre_state:
-                        Reward = -7
+                        Reward = 8
                     else:
-                        Reward = -4.5
+                        Reward = 10.5
                 elif cur_state < OCC_TH_HIGH and (OCC_TH_LOW <= pre_state < OCC_TH_HIGH):
                     prev_state_arr = []
                     for i in range(NUM_INTN_ROADS[intID]):
@@ -366,9 +366,9 @@ def calculate_reward(current_state, previous_state, intID, phase_num, current_al
 
                     prev_state_max = max(prev_state_arr)
                     if prev_state_max == pre_state:
-                        Reward = -2
+                        Reward = 13
                     else:
-                        Reward = 0.5
+                        Reward = 15.5
                 elif cur_state >= OCC_TH_HIGH and (OCC_TH_LOW <= pre_state < OCC_TH_HIGH):
                     prev_state_arr = []
                     for i in range(NUM_INTN_ROADS[intID]):
@@ -382,11 +382,11 @@ def calculate_reward(current_state, previous_state, intID, phase_num, current_al
 
                     prev_state_max = max(prev_state_arr)
                     if prev_state_max == pre_state:
-                        Reward = -12
+                        Reward = 3
                     else:
-                        Reward = -9.5
+                        Reward = 6.5
                 elif cur_state >= OCC_TH_HIGH and pre_state >= OCC_TH_HIGH:
-                    Reward = -17
+                    Reward = -2
 
                 dep_rwd_penality = 5
 
