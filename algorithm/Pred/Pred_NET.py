@@ -36,17 +36,30 @@ class Pred_NET(nn.Module):
         Q = self.linear_q(x)
         V = self.linear_v(x)
 
-        K_T = torch.transpose(K,0,1)
-        ones_q = torch.ones(Q.shape[0], Q.shape[1]).to(device)
-        ones_k_T = torch.ones(K.shape[1], K.shape[0]).to(device)
+        hid1 = torch.matmul(K.transpose(0, 1), V)
+        res1 = torch.matmul(Q, hid1)
 
-        q_plus_one = torch.add(Q, ones_q)
-        k_plus_one = torch.add(K_T, ones_k_T)
-        mul_1 = torch.mm(k_plus_one, V)
-        mul_2 = torch.mm(ones_k_T, V)
-        mul_3 = torch.mm(K_T, V)
-        output_1 = torch.mm(q_plus_one, mul_1) - torch.mm(Q, mul_2) - torch.mm(ones_q, mul_3)
+        q2 = torch.mul(Q, Q)
+        k2 = torch.mul(K, K)
+        hid2 = torch.matmul(k2.transpose(0, 1), V)
+        res2 = torch.matmul(q2, hid2)
+
+        output_1 = res1 - res2
+
         # output_2 = self.linear_2(output_1)
+
+
+        # K_T = torch.transpose(K,0,1)
+        # ones_q = torch.ones(Q.shape[0], Q.shape[1]).to(device)
+        # ones_k_T = torch.ones(K.shape[1], K.shape[0]).to(device)
+        #
+        # q_plus_one = torch.add(Q, ones_q)
+        # k_plus_one = torch.add(K_T, ones_k_T)
+        # mul_1 = torch.mm(k_plus_one, V)
+        # mul_2 = torch.mm(ones_k_T, V)
+        # mul_3 = torch.mm(K_T, V)
+        # output_1 = torch.mm(q_plus_one, mul_1) - torch.mm(Q, mul_2) - torch.mm(ones_q, mul_3)
+        # # output_2 = self.linear_2(output_1)
 
         topk, _ = output_1.topk(self.K, dim=0, largest=True, sorted=True)
         output_2 = self.linear_2(topk)
