@@ -116,7 +116,7 @@ def start_new_run(run):
         # Generate a new random routes file
         os.system(
             "python \"%SUMO_HOME%/tools/randomTrips.py\" -n data/" + ss + ".net.xml --trip-attributes=\"type=\\\"light_norm_heavy\\\"\" "
-                                                                          "-a data/" + ss + ".add.xml -r data/" + ss + ".rou.xml -e 10000 -p 0.75 --binomial=5 -L")
+                                                                          "-a data/" + ss + ".add.xml -r data/" + ss + ".rou.xml -e 5000 -p 0.45 --binomial=5 -L")
         print('Delete useless files...')
         # Delete unwanted alt route file
         os.system("del \"data\\" + ss + ".rou.alt.xml\"")
@@ -126,7 +126,7 @@ def start_new_run(run):
         # Generate a new random routes file
         os.system(
             "python \"$SUMO_HOME/tools/randomTrips.py\" -n data/" + ss + ".net.xml --trip-attributes=\"type=\\\"light_norm_heavy\\\"\" "
-                                                                         "-a data/" + ss + ".add.xml -r data/" + ss + ".rou.xml -e 10000 -p 0.75 --binomial=5 -L")
+                                                                         "-a data/" + ss + ".add.xml -r data/" + ss + ".rou.xml -e 5000 -p 0.45 --binomial=5 -L")
         print('Delete useless files...')
         # Delete unwanted alt route file
         os.system("rm \"data/" + ss + ".rou.alt.xml\"")
@@ -169,11 +169,12 @@ def get_current_state():
     for key, value in full_in_lanes_num.items():
         n = 0.0
         for j in range(value):
-            state_all[key + '_' + str(j)] = traci.lanearea.getLastStepOccupancy("e2det_" + key + "_" + str(j)) / 100.0
-            n = max(n, traci.lanearea.getLastStepOccupancy("e2det_" + key + "_" + str(j)) / 100.0)
+            tmp_state = traci.lanearea.getLastStepOccupancy("e2det_" + key + "_" + str(j)) / 100.0
+            if tmp_state > 1.0:
+                tmp_state = 1.01
+            state_all[key + '_' + str(j)] = tmp_state
+            n = max(n, tmp_state)
         state[key] = n
-        if n > 1:
-            print('test state:', n)
 
     return state, state_all
 

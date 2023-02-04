@@ -15,7 +15,7 @@ from utils.sql_query import get_full_lanes_num
 if __name__ == '__main__':
     args = parser.parse_args()
 
-    map_name = 'txmap'
+    map_name = args.sumo_file_name
     with open('../data/'+map_name+'.det.xml', 'w') as f:
         f.write('<additional>\n')
 
@@ -33,4 +33,4 @@ if __name__ == '__main__':
 
         f.write('</additional>\n')
 
-    os.system('python ../data/randomTrips.py -n ../data/txmap.net.xml -r ../data/txmap.rou.xml -e 50000 -l --validate - flows 5000')
+    os.system('python ../data/randomTrips.py -n ../data/'+ map_name +'.net.xml -r ../data/' + map_name + '.rou.xml -e 10000 -l --validate - flows 500')
