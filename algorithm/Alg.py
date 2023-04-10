@@ -38,7 +38,7 @@ PMODELPARA = './logs/param/Pmodel.pth'
 # Training
 # Inputs - Nruns: No. of runs of training
 # Outputs - None
-def Distr_PPO(Nruns):
+def algorithm(Nruns):
     agents = {}
     logger = {}
     running_reward = {}
