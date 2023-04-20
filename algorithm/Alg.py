@@ -14,7 +14,7 @@ from collections import namedtuple
 import torch.optim as optim
 
 from algorithm.Pred.Pred_NET import Pred_NET
-from algorithm.RL.PPO import PPO
+from algorithm.RL.Model import Model
 from sumo_related import sumo_env, sumo_util
 from utils.logger import Logger
 
@@ -64,7 +64,7 @@ def algorithm(Nruns):
         for i in range(int(value/2)):
             a_spaces[key].append(i)
         # network
-        agents[key] = PPO(STATE_LEN, int(value/2), key)
+        agents[key] = Model(STATE_LEN, int(value/2), key)
 
     print('Construct graph...')
     G = full_graph_contruction(args)
