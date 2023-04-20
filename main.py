@@ -8,7 +8,7 @@ from utils import plot_metrics
 
 # Train the model
 sumo_env.endis_sumo_guimode(1)
-Nruns = 25
+Nruns = 100
 algorithm(Nruns)
 print("finish 1")
 
